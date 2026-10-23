@@ -1,0 +1,40 @@
+name: Build mod jar
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.1.1
+
+      # Works whether build.gradle is at the repo root or inside a "gulp" folder.
+      - name: Find project folder
+        id: proj
+        run: |
+          if [ -f build.gradle ]; then echo "dir=." >> "$GITHUB_OUTPUT"
+          elif [ -f gulp/build.gradle ]; then echo "dir=gulp" >> "$GITHUB_OUTPUT"
+          else echo "build.gradle not found"; exit 1; fi
+
+      - name: Build
+        working-directory: ${{ steps.proj.outputs.dir }}
+        run: gradle build --no-daemon
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: gulp-mod
+          path: ${{ steps.proj.outputs.dir }}/build/libs/*.jar
+          if-no-files-found: error
