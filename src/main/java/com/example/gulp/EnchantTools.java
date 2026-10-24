@@ -21,8 +21,10 @@ import java.util.Map;
  * Enchant Stripper perk. Uses the two boxes on the left of the storage screen (Stomach.stripSlots), which you fill by
  * clicking items into them like normal slots:
  *  box 0 = source, box 1 = target.
- *  Strip    the source (enchanted gear) loses its enchantments, which go into an enchanted book. The book lands in the
- *           target box if it's empty, otherwise in your item storage (or your inventory if that is full).
+ *  Strip    the source (enchanted gear) loses its enchantments, which go into a plain book from the target box (one book
+ *           is used up and becomes the enchanted book, so no books are ever created from nothing). The enchanted book
+ *           stays in the target box if that was the only book, otherwise it goes to your item storage (or inventory).
+ *  Destroy  deletes all the enchantments on the source for good, and makes nothing.
  *  Transfer the source's enchantments (gear or enchanted book) move onto the item in the target box. Soft mode only.
  * Every rank loses one level less: rank 1 loses 2 levels per enchantment, rank 2 loses 1, rank 3 loses none.
  * An enchantment that would drop below level 1 is left alone (never destroyed).
@@ -79,8 +81,13 @@ final class EnchantTools {
             return;
         }
         ItemStack src = s.stripSlots.get(0);
+        ItemStack bookBox = s.stripSlots.get(1);
         if (src.isEmpty() || src.getCount() != 1 || src.is(Items.ENCHANTED_BOOK) || !src.isEnchanted()) {
             StomachLogic.say(p, Component.literal("Put one piece of enchanted gear in the first box."));
+            return;
+        }
+        if (!bookBox.is(Items.BOOK)) {
+            StomachLogic.say(p, Component.literal("Put a plain book in the second box. Stripping uses it up."));
             return;
         }
         int lost = levelsLost(rank);
@@ -99,15 +106,38 @@ final class EnchantTools {
         }
         Component name = src.getHoverName();
         EnchantmentHelper.setEnchantments(new HashMap<>(), src); // the gear is plain now
-        if (s.stripSlots.get(1).isEmpty()) {
-            s.stripSlots.set(1, book); // the book appears in the target box
+        if (bookBox.getCount() == 1) {
+            s.stripSlots.set(1, book); // the plain book becomes the enchanted book
         } else {
+            bookBox.shrink(1); // one plain book used up
             ItemStack left = view.addItem(book);
             if (!left.isEmpty()) ItemHandlerHelper.giveItemToPlayer(p, left); // storage full: the book goes to you
             view.setChanged();
         }
-        StomachLogic.say(p, Component.literal("Stripped " + name.getString() + " into an enchanted book"
+        StomachLogic.say(p, Component.literal("Stripped " + name.getString() + " onto a book"
                 + (lost > 0 ? " (-" + lost + " level" + (lost > 1 ? "s" : "") + ")" : "")));
+        StomachLogic.sound(p, GulpSound.DIGEST_BUTTON);
+    }
+
+    /** Deletes every enchantment on the item in the source box. Nothing is made. */
+    static void destroy(ServerPlayer p, Stomach s) {
+        if (s.rank(Perk.STRIP) < 1) {
+            StomachLogic.say(p, Component.literal("You need the Enchant Stripper perk."));
+            return;
+        }
+        ItemStack src = s.stripSlots.get(0);
+        boolean book = src.is(Items.ENCHANTED_BOOK);
+        if (src.isEmpty() || src.getCount() != 1 || (!book && !src.isEnchanted())) {
+            StomachLogic.say(p, Component.literal("Put one enchanted item in the first box."));
+            return;
+        }
+        Component name = src.getHoverName();
+        if (book) {
+            s.stripSlots.set(0, new ItemStack(Items.BOOK)); // an emptied book is just a book
+        } else {
+            EnchantmentHelper.setEnchantments(new HashMap<>(), src);
+        }
+        StomachLogic.say(p, Component.literal("Destroyed the enchantments on " + name.getString() + "."));
         StomachLogic.sound(p, GulpSound.DIGEST_BUTTON);
     }
 

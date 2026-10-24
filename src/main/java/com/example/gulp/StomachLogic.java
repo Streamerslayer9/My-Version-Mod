@@ -8,6 +8,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -82,6 +85,7 @@ public final class StomachLogic {
     // 0 swallow | 1 toggle mode | 2 release last | 3 release all
     // 4 release entry (arg = uid) | 5 digest entry now (arg = uid) | 6 buy perk (arg = perk index)
     // 7 open item storage | 8 set your role (arg = Role ordinal)
+    // 16 destroy the enchantments on the source box (nothing is made)
     // 15 click on an Enchant Stripper box (arg = box | button << 4 | shift << 5)
     // 14 dev shortcut: one instant level (1 + P)
     // 12 strip the source box into an enchanted book | 13 transfer source box enchantments to the target box (soft mode)
@@ -102,7 +106,7 @@ public final class StomachLogic {
         Stomach s = mgr.of(p.getUUID());
         // Roles: Prey and Neither have no swallowing, mode switch, digesting or item storage at all.
         // (Release, perks and changing your role always work.)
-        if (!s.role.canEat() && (action == 0 || action == 1 || action == 5 || action == 7 || action == 9 || action == 10 || action == 12 || action == 13 || action == 15)) {
+        if (!s.role.canEat() && (action == 0 || action == 1 || action == 5 || action == 7 || action == 9 || action == 10 || action == 12 || action == 13 || action == 15 || action == 16)) {
             StomachLogic.say(p, s.role.cantSwallowMessage());
             return;
         }
@@ -174,12 +178,14 @@ public final class StomachLogic {
                     EnchantTools.clickBox(p, s, view, arg & 15, (arg >> 4) & 1, ((arg >> 5) & 1) != 0);
                 }
             }
-            case 12, 13 -> {
+            case 12, 13, 16 -> {
                 // Enchant Stripper buttons on the storage screen: 12 = strip the source box into a book, 13 = transfer source box -> target box.
                 if (GulpServerConfig.ITEM_STORAGE_ENABLED.get() && p.containerMenu instanceof ChestMenu cm
                         && cm.getContainer() == OPEN_VIEWS.get(p.getUUID())
                         && cm.getContainer() instanceof SimpleContainer view) {
-                    if (action == 12) EnchantTools.strip(p, s, view); else EnchantTools.transfer(p, s, view);
+                    if (action == 12) EnchantTools.strip(p, s, view);
+                    else if (action == 13) EnchantTools.transfer(p, s, view);
+                    else EnchantTools.destroy(p, s);
                 }
             }
             case 10 -> {
@@ -360,13 +366,7 @@ public final class StomachLogic {
         if (!(slot.container instanceof Inventory) || slot.getSlotIndex() >= 36 || !slot.hasItem()) return;
 
         ItemStack stack = slot.getItem();
-        // Sharp / hazardous items hurt. The client shows a warning and sends "confirmed" (bit 17); the server insists on it.
-        boolean hazardous = HazardItems.isHazardous(stack) && !p.isCreative();
-        boolean confirmed = (arg & (1 << 17)) != 0;
-        if (hazardous && !confirmed) {
-            say(p, Component.literal("Careful! Swallowing " + stack.getHoverName().getString() + " would hurt you. Confirm the warning first."));
-            return;
-        }
+        boolean hazardous = HazardItems.isHazardous(stack); // sharp / hazardous items hurt you as they go down
         int wanted = justOne ? 1 : stack.getCount();
         ItemStack offer = stack.copy();
         offer.setCount(wanted);
@@ -381,13 +381,70 @@ public final class StomachLogic {
         p.containerMenu.broadcastChanges();
         sound(p, GulpSound.SWALLOW);
         say(p, Component.literal("Gulp! Swallowed " + taken + "x ").append(name));
-        if (hazardous) {
-            // Never below 2 hearts, so a hazard can hurt but not kill.
-            float damage = Math.min(GulpServerConfig.HAZARD_SELF_DAMAGE.get().floatValue(), p.getHealth() - 4f);
-            if (damage > 0f) {
-                p.hurt(p.damageSources().generic(), damage);
-                say(p, Component.literal("Ouch! " + name.getString() + " hurt on the way down."));
+        if (hazardous) hazardHurt(p, name.getString() + " hurt on the way down.");
+    }
+
+    /** Self-damage for sharp / hazardous items. Never below 2 hearts, so it can hurt but not kill; creative players take none. */
+    static void hazardHurt(ServerPlayer p, String message) {
+        if (p.isCreative()) return;
+        float damage = Math.min(GulpServerConfig.HAZARD_SELF_DAMAGE.get().floatValue(), p.getHealth() - 4f);
+        if (damage > 0f) {
+            p.hurt(p.damageSources().generic(), damage);
+            say(p, Component.literal("Ouch! " + message));
+        }
+    }
+
+    /**
+     * The storage screen. Behaves like a normal chest, except that moving a sharp / hazardous item between your inventory
+     * and the stomach storage hurts you (shift-click, number-key swap, or picking it up on one side and putting it down on
+     * the other). Moving it around inside the storage does not.
+     */
+    private static final class StorageMenu extends ChestMenu {
+        private int origin; // where a hazardous item on the cursor came from: 0 none, 1 stomach, 2 inventory
+
+        StorageMenu(MenuType<?> type, int id, Inventory inv, Container view, int rows) {
+            super(type, id, inv, view, rows);
+        }
+
+        private static int hz(ItemStack st) { return HazardItems.isHazardous(st) ? st.getCount() : 0; }
+
+        private int inside() {
+            int n = 0;
+            for (int i = 0; i < getContainer().getContainerSize(); i++) n += hz(getContainer().getItem(i));
+            return n;
+        }
+
+        private int outside() { // the inventory and hotbar slots of this screen
+            int n = 0;
+            for (int i = getContainer().getContainerSize(); i < slots.size(); i++) n += hz(slots.get(i).getItem());
+            return n;
+        }
+
+        @Override
+        public void clicked(int slotId, int button, ClickType type, Player player) {
+            if (!(player instanceof ServerPlayer sp) || sp.isCreative()) {
+                super.clicked(slotId, button, type, player);
+                return;
             }
+            int insideBefore = inside();
+            int outsideBefore = outside();
+            int carriedBefore = hz(getCarried());
+            super.clicked(slotId, button, type, player);
+            int insideDelta = inside() - insideBefore;
+            int outsideDelta = outside() - outsideBefore;
+            int carriedAfter = hz(getCarried());
+
+            boolean crossed = false;
+            if (carriedAfter == carriedBefore) {
+                crossed = (insideDelta > 0 && outsideDelta < 0) || (insideDelta < 0 && outsideDelta > 0); // moved straight across
+                if (carriedAfter == 0) origin = 0;
+            } else if (carriedAfter > carriedBefore) { // picked up: remember which side it came from
+                origin = insideDelta < 0 ? 1 : (outsideDelta < 0 ? 2 : origin);
+            } else { // put down: hurts if it ended up on the other side
+                crossed = (insideDelta > 0 && origin == 2) || (outsideDelta > 0 && origin == 1);
+                if (carriedAfter == 0) origin = 0;
+            }
+            if (crossed) hazardHurt(sp, "Handling something sharp inside your stomach hurts.");
         }
     }
 
@@ -416,7 +473,7 @@ public final class StomachLogic {
             case 5 -> MenuType.GENERIC_9x5;
             default -> MenuType.GENERIC_9x6;
         };
-        p.openMenu(new SimpleMenuProvider((id, inv, player) -> new ChestMenu(type, id, inv, view, rows),
+        p.openMenu(new SimpleMenuProvider((id, inv, player) -> new StorageMenu(type, id, inv, view, rows),
                 Component.literal(Gulp.STORAGE_TITLE)));
     }
 

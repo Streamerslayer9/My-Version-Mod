@@ -83,8 +83,8 @@ public final class GulpServerConfig {
                         "times this number, on top of the box itself. 0 = boxes always weigh one slot. This drives the item belly size.")
                 .defineInRange("nestedWeightMultiplier", 1.0, 0.0, 2.0);
         HAZARD_SELF_DAMAGE = b
-                .comment("Health points (2 = one heart) you take when you swallow something sharp or hazardous (swords, axes, cactus, lava ...).",
-                        "You are warned first and must confirm. It never takes you below 2 hearts and creative players take none. 0 = no damage.",
+                .comment("Health points (2 = one heart) you take when you swallow something sharp or hazardous (swords, axes, cactus, lava ...),",
+                        "and whenever you move one between your inventory and the stomach storage. It never takes you below 2 hearts and creative players take none. 0 = no damage.",
                         "Edit the item tag gulp:stomach_hazardous to change which items count (swords, axes, tridents, shears and arrows always do).")
                 .defineInRange("hazardSelfDamage", 2.0, 0.0, 10.0);
         SHARED_STORAGE_VIEW_ENABLED = b

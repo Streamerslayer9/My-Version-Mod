@@ -36,19 +36,7 @@ public final class ClientScreenEvents {
         Slot slot = screen.getSlotUnderMouse();
         // Only your own inventory and hotbar (not armor, the offhand or the crafting grid).
         if (slot == null || !slot.hasItem() || !(slot.container instanceof Inventory) || slot.getSlotIndex() >= 36) return;
-        int arg = slot.index | (Screen.hasControlDown() ? 1 << 16 : 0);
-        ItemStack item = slot.getItem();
-        if (HazardItems.isHazardous(item) && !Minecraft.getInstance().player.isCreative()) {
-            // Sharp or hazardous: ask first. "Yes" sends the swallow with the "confirmed" bit (17) set.
-            Minecraft mc = Minecraft.getInstance();
-            mc.setScreen(new ConfirmScreen(yes -> {
-                mc.setScreen(screen); // back to the inventory either way
-                if (yes) Net.send(9, arg | (1 << 17));
-            }, Component.literal("Warning: sharp or hazardous item"),
-                    Component.literal("Swallowing " + item.getHoverName().getString() + " will hurt you. Swallow it anyway?")));
-        } else {
-            Net.send(9, arg);
-        }
+        Net.send(9, slot.index | (Screen.hasControlDown() ? 1 << 16 : 0));
         e.setCanceled(true);
     }
 
@@ -76,11 +64,21 @@ public final class ClientScreenEvents {
         int barY = screen.getGuiTop() + PANEL_OFFSET_Y + BOX + 4;
         Button strip = new SmallTextButton(x, barY, width, 14, Component.literal("Strip"), btn -> Net.send(12));
         Button transfer = new SmallTextButton(x, barY + 16, width, 14, Component.literal("Transfer"), btn -> Net.send(13));
+        final SmallTextButton[] ref = new SmallTextButton[1];
+        SmallTextButton destroy = new SmallTextButton(x, barY + 32, width, 14, Component.literal("Destroy"), btn -> {
+            if (ref[0].confirmed()) Net.send(16); // the first click only arms it
+        });
+        ref[0] = destroy;
+        destroy.active = rank >= 1;
+        destroy.setTooltip(Tooltip.create(Component.literal(rank < 1
+                ? "Needs the Enchant Stripper perk (stomach level 50)."
+                : "Permanently delete all enchantments on the item in the first box. Nothing is made. Click twice to confirm.")));
+        e.addListener(destroy);
         strip.active = rank >= 1;
         transfer.active = rank >= 1 && !ClientState.isHard();
         strip.setTooltip(Tooltip.create(Component.literal(rank < 1
                 ? "Needs the Enchant Stripper perk (stomach level 50)."
-                : "Strip the enchantments off the gear in the first box into an enchanted book (it appears in the second box if that is empty, otherwise in your storage). Levels lost per enchantment: " + lost + ".")));
+                : "Strip the enchantments off the gear in the first box onto a plain book in the second box (the book is used up). Levels lost per enchantment: " + lost + ".")));
         transfer.setTooltip(Tooltip.create(Component.literal(rank < 1
                 ? "Needs the Enchant Stripper perk (stomach level 50)."
                 : ClientState.isHard()
@@ -107,13 +105,28 @@ public final class ClientScreenEvents {
     private static final class SmallTextButton extends Button {
         private static final float TEXT_SCALE = 0.8f;
 
+        private long armedUntil; // for buttons that need a second click to confirm
+
         SmallTextButton(int x, int y, int w, int h, Component label, Button.OnPress onPress) {
             super(x, y, w, h, label, onPress, Button.DEFAULT_NARRATION);
         }
 
+        /** First call arms the button for 3 seconds (it shows "Sure?"); a second call within that time returns true. */
+        boolean confirmed() {
+            long now = System.currentTimeMillis();
+            if (now < armedUntil) {
+                armedUntil = 0;
+                return true;
+            }
+            armedUntil = now + 3000;
+            return false;
+        }
+
         // Replaces the vanilla label drawing (called by Button.renderWidget) with a scaled, centered label.
         public void renderString(GuiGraphics g, Font font, int color) {
-            Component label = getMessage();
+            boolean armed = System.currentTimeMillis() < armedUntil;
+            Component label = armed ? Component.literal("Sure?") : getMessage();
+            if (armed) color = 0xFFFF5555;
             float cx = getX() + getWidth() / 2f;
             float cy = getY() + (getHeight() - font.lineHeight * TEXT_SCALE) / 2f + 0.5f;
             g.pose().pushPose();
