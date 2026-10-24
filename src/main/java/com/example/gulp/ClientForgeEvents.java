@@ -1,6 +1,10 @@
 package com.example.gulp;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.social.SocialInteractionsScreen;
+import net.minecraftforge.client.event.InputEvent;
+import org.lwjgl.glfw.GLFW;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
@@ -21,11 +25,33 @@ public final class ClientForgeEvents {
         ScreenLoop.stop();
     }
 
+    /** Ticks left in which a Social Interactions screen (vanilla's P key) opened by the dev chord is closed again. */
+    private static int closeSocialTicks;
+
+    /** Dev shortcut: 1 and P pressed together = one instant stomach level (the server checks devLevelUpKey / operator). */
+    @SubscribeEvent
+    public static void onKey(InputEvent.Key e) {
+        if (e.getAction() != GLFW.GLFW_PRESS) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.screen != null) return; // not while typing in chat or in a menu
+        int key = e.getKey();
+        if (key != GLFW.GLFW_KEY_1 && key != GLFW.GLFW_KEY_P) return;
+        int other = key == GLFW.GLFW_KEY_1 ? GLFW.GLFW_KEY_P : GLFW.GLFW_KEY_1;
+        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), other)) {
+            Net.send(14);
+            closeSocialTicks = 4; // vanilla opens the Social Interactions screen on P: shut it again
+        }
+    }
+
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent e) {
         if (e.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
+        if (closeSocialTicks > 0) {
+            closeSocialTicks--;
+            if (mc.screen instanceof SocialInteractionsScreen) mc.setScreen(null);
+        }
         CpmDriver.tick(); // Custom Player Models belly sliders (does nothing without CPM)
 
         while (ClientModEvents.SWALLOW_KEY.consumeClick()) {

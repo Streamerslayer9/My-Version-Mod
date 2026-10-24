@@ -33,6 +33,7 @@ public final class GulpServerConfig {
     public static final ForgeConfigSpec.IntValue MCA_HEARTS_LOCK;
     public static final ForgeConfigSpec.IntValue MCA_PREDATOR_DECAY_SECONDS;
     public static final ForgeConfigSpec.BooleanValue MCA_PANIC;
+    public static final ForgeConfigSpec.BooleanValue DEV_LEVEL_UP_ENABLED;
     public static final ForgeConfigSpec.BooleanValue MCA_STATUS_MESSAGE;
 
     static {
@@ -130,6 +131,10 @@ public final class GulpServerConfig {
                 .comment("Test/dev helper: when a player joins, show a chat line saying whether this mod connected to Minecraft Comes Alive.",
                         "Set to false to turn it off once you've confirmed it works.")
                 .define("mcaStatusMessage", true);
+        DEV_LEVEL_UP_ENABLED = b
+                .comment("Test/dev helper: pressing the 1 and P keys together gives yourself one instant stomach level.",
+                        "SET THIS TO FALSE BEFORE RELEASING. When false, only operators (permission level 2) can use it.")
+                .define("devLevelUpKey", true);
         SPEC = b.build();
     }
 

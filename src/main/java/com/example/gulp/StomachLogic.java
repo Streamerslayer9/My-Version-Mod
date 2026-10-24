@@ -82,6 +82,7 @@ public final class StomachLogic {
     // 0 swallow | 1 toggle mode | 2 release last | 3 release all
     // 4 release entry (arg = uid) | 5 digest entry now (arg = uid) | 6 buy perk (arg = perk index)
     // 7 open item storage | 8 set your role (arg = Role ordinal)
+    // 14 dev shortcut: one instant level (1 + P)
     // 12 strip slot 1 into an enchanted book | 13 transfer slot 1 enchantments to slot 2 (soft mode)
     // 11 swallowed player: struggle (hard mode) / rub the walls (soft mode)
     // 10 digest the first slot of the open storage screen (arg = how many, 1 or 64)
@@ -154,6 +155,16 @@ public final class StomachLogic {
             }
             case 7 -> openStorage(p, mgr, s);
             case 9 -> swallowFromInventorySlot(p, s, arg);
+            case 14 -> {
+                // Dev shortcut (1 + P): one instant level, through the normal level-up (points, sound, message).
+                if (!GulpServerConfig.DEV_LEVEL_UP_ENABLED.get() && !p.hasPermissions(2)) {
+                    say(p, Component.literal("The dev level-up key is turned off on this server."));
+                } else if (s.level >= Stomach.MAX_LEVEL) {
+                    say(p, Component.literal("Already at the maximum stomach level."));
+                } else if (s.addXp(Stomach.xpForNext(s.level) - s.xp) > 0) {
+                    levelUp(p, s);
+                }
+            }
             case 12, 13 -> {
                 // Enchant Stripper buttons on the storage screen: 12 = strip slot 1 into a book, 13 = transfer slot 1 -> slot 2.
                 if (GulpServerConfig.ITEM_STORAGE_ENABLED.get() && p.containerMenu instanceof ChestMenu cm
