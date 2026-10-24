@@ -3,6 +3,7 @@ package com.example.gulp;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class SyncPacket {
     public int predator;
     public float itemFill;
     public int digestProgress;
+    public ItemStack strip0 = ItemStack.EMPTY;
+    public ItemStack strip1 = ItemStack.EMPTY;
     public float used, cap;
     public int[] ranks = new int[Perk.values().length];
     public List<ClientState.EntryInfo> entries = new ArrayList<>();
@@ -34,6 +37,8 @@ public class SyncPacket {
         m.predator = s.predator;
         m.itemFill = s.itemFill();
         m.digestProgress = s.digestProgress;
+        m.strip0 = s.stripSlots.get(0).copy();
+        m.strip1 = s.stripSlots.get(1).copy();
         for (Perk p : Perk.values()) m.ranks[p.ordinal()] = s.rank(p);
         for (CompoundTag e : s.contents) {
             CompoundTag ent = e.getCompound("Entity");
@@ -58,6 +63,8 @@ public class SyncPacket {
         buf.writeInt(m.predator);
         buf.writeFloat(m.itemFill);
         buf.writeInt(m.digestProgress);
+        buf.writeItem(m.strip0);
+        buf.writeItem(m.strip1);
         buf.writeInt(m.ranks.length);
         for (int r : m.ranks) buf.writeInt(r);
         buf.writeInt(m.entries.size());
@@ -85,6 +92,8 @@ public class SyncPacket {
         m.predator = buf.readInt();
         m.itemFill = buf.readFloat();
         m.digestProgress = buf.readInt();
+        m.strip0 = buf.readItem();
+        m.strip1 = buf.readItem();
         int perkCount = buf.readInt();
         for (int i = 0; i < perkCount; i++) {
             int v = buf.readInt();

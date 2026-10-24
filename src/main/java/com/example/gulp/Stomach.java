@@ -41,6 +41,9 @@ public class Stomach {
     /** Item storage: up to 54 slots, but only the first storageSlots() are usable (it grows with your level). */
     public final NonNullList<ItemStack> storage = NonNullList.withSize(54, ItemStack.EMPTY);
 
+    /** The two Enchant Stripper boxes on the storage screen: 0 = source (enchanted gear), 1 = target. Saved with the stomach. */
+    public final NonNullList<ItemStack> stripSlots = NonNullList.withSize(2, ItemStack.EMPTY);
+
     /** Role badge: who can swallow whom. Pred by default (you can swallow, nobody can swallow you). See Role. */
     public Role role = Role.PRED;
 
@@ -185,6 +188,7 @@ public class Stomach {
         nbt.putInt("Predator", predator);
         nbt.putInt("DigestProgress", digestProgress);
         nbt.put("Storage", ContainerHelper.saveAllItems(new CompoundTag(), storage));
+        nbt.put("StripSlots", ContainerHelper.saveAllItems(new CompoundTag(), stripSlots));
         ListTag list = new ListTag();
         list.addAll(contents);
         nbt.put("Contents", list);
@@ -203,6 +207,7 @@ public class Stomach {
         s.predator = Math.max(0, nbt.getInt("Predator"));
         s.digestProgress = Math.max(0, Math.min(StomachItems.DIGEST_THRESHOLD - 1, nbt.getInt("DigestProgress")));
         ContainerHelper.loadAllItems(nbt.getCompound("Storage"), s.storage);
+        ContainerHelper.loadAllItems(nbt.getCompound("StripSlots"), s.stripSlots);
         CompoundTag perks = nbt.getCompound("Perks");
         for (Perk p : Perk.values()) s.ranks[p.ordinal()] = Math.min(p.maxRank, perks.getInt(p.name()));
         // Older saves earned fewer points. Top them up so everyone has what a player at their level should have.

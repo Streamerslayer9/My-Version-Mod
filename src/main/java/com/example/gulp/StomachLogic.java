@@ -82,8 +82,9 @@ public final class StomachLogic {
     // 0 swallow | 1 toggle mode | 2 release last | 3 release all
     // 4 release entry (arg = uid) | 5 digest entry now (arg = uid) | 6 buy perk (arg = perk index)
     // 7 open item storage | 8 set your role (arg = Role ordinal)
+    // 15 click on an Enchant Stripper box (arg = box | button << 4 | shift << 5)
     // 14 dev shortcut: one instant level (1 + P)
-    // 12 strip slot 1 into an enchanted book | 13 transfer slot 1 enchantments to slot 2 (soft mode)
+    // 12 strip the source box into an enchanted book | 13 transfer source box enchantments to the target box (soft mode)
     // 11 swallowed player: struggle (hard mode) / rub the walls (soft mode)
     // 10 digest the first slot of the open storage screen (arg = how many, 1 or 64)
     // 9 swallow the item in an inventory slot (arg = slot in the inventory screen, plus 65536 for just one item)
@@ -101,7 +102,7 @@ public final class StomachLogic {
         Stomach s = mgr.of(p.getUUID());
         // Roles: Prey and Neither have no swallowing, mode switch, digesting or item storage at all.
         // (Release, perks and changing your role always work.)
-        if (!s.role.canEat() && (action == 0 || action == 1 || action == 5 || action == 7 || action == 9 || action == 10 || action == 12 || action == 13)) {
+        if (!s.role.canEat() && (action == 0 || action == 1 || action == 5 || action == 7 || action == 9 || action == 10 || action == 12 || action == 13 || action == 15)) {
             StomachLogic.say(p, s.role.cantSwallowMessage());
             return;
         }
@@ -165,8 +166,16 @@ public final class StomachLogic {
                     levelUp(p, s);
                 }
             }
+            case 15 -> {
+                // Click on one of the Enchant Stripper boxes (arg: box | button << 4 | shift << 5), same as clicking a slot.
+                if (GulpServerConfig.ITEM_STORAGE_ENABLED.get() && p.containerMenu instanceof ChestMenu cm
+                        && cm.getContainer() == OPEN_VIEWS.get(p.getUUID())
+                        && cm.getContainer() instanceof SimpleContainer view) {
+                    EnchantTools.clickBox(p, s, view, arg & 15, (arg >> 4) & 1, ((arg >> 5) & 1) != 0);
+                }
+            }
             case 12, 13 -> {
-                // Enchant Stripper buttons on the storage screen: 12 = strip slot 1 into a book, 13 = transfer slot 1 -> slot 2.
+                // Enchant Stripper buttons on the storage screen: 12 = strip the source box into a book, 13 = transfer source box -> target box.
                 if (GulpServerConfig.ITEM_STORAGE_ENABLED.get() && p.containerMenu instanceof ChestMenu cm
                         && cm.getContainer() == OPEN_VIEWS.get(p.getUUID())
                         && cm.getContainer() instanceof SimpleContainer view) {

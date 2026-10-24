@@ -3,6 +3,7 @@ package com.example.gulp;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,9 +18,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Enchant Stripper perk. Works on the first two slots of the open storage screen:
- *  Strip    slot 1 (enchanted gear) loses its enchantments, which go into an enchanted book in your storage.
- *  Transfer slot 1 (enchanted gear or book) gives its enchantments to the item in slot 2. Soft mode only.
+ * Enchant Stripper perk. Uses the two boxes on the left of the storage screen (Stomach.stripSlots), which you fill by
+ * clicking items into them like normal slots:
+ *  box 0 = source, box 1 = target.
+ *  Strip    the source (enchanted gear) loses its enchantments, which go into an enchanted book. The book lands in the
+ *           target box if it's empty, otherwise in your item storage (or your inventory if that is full).
+ *  Transfer the source's enchantments (gear or enchanted book) move onto the item in the target box. Soft mode only.
  * Every rank loses one level less: rank 1 loses 2 levels per enchantment, rank 2 loses 1, rank 3 loses none.
  * An enchantment that would drop below level 1 is left alone (never destroyed).
  */
@@ -28,15 +32,55 @@ final class EnchantTools {
 
     static int levelsLost(int rank) { return Math.max(0, 3 - rank); }
 
+    /** A click on box 0 or 1 with the mouse: picks the item up, puts the carried item in, merges or swaps, like a slot. */
+    static void clickBox(ServerPlayer p, Stomach s, SimpleContainer view, int box, int button, boolean shift) {
+        if (box < 0 || box > 1) return;
+        if (s.rank(Perk.STRIP) < 1) {
+            StomachLogic.say(p, Component.literal("You need the Enchant Stripper perk."));
+            return;
+        }
+        AbstractContainerMenu menu = p.containerMenu;
+        ItemStack inBox = s.stripSlots.get(box);
+        ItemStack carried = menu.getCarried();
+
+        if (shift) {
+            // Shift-click sends the item back to the item storage (or your inventory if that is full).
+            if (!inBox.isEmpty()) {
+                s.stripSlots.set(box, ItemStack.EMPTY);
+                ItemStack left = view.addItem(inBox);
+                if (!left.isEmpty()) ItemHandlerHelper.giveItemToPlayer(p, left);
+                view.setChanged();
+            }
+        } else if (carried.isEmpty()) {
+            if (!inBox.isEmpty()) { // pick the whole stack up
+                menu.setCarried(inBox);
+                s.stripSlots.set(box, ItemStack.EMPTY);
+            }
+        } else if (inBox.isEmpty()) {
+            ItemStack placed = carried.split(button == 1 ? 1 : carried.getCount()); // right click puts just one
+            s.stripSlots.set(box, placed);
+            if (carried.isEmpty()) menu.setCarried(ItemStack.EMPTY);
+        } else if (ItemStack.isSameItemSameTags(inBox, carried) && inBox.getCount() < inBox.getMaxStackSize()) {
+            int move = Math.min(button == 1 ? 1 : carried.getCount(), inBox.getMaxStackSize() - inBox.getCount());
+            inBox.grow(move);
+            carried.shrink(move);
+            if (carried.isEmpty()) menu.setCarried(ItemStack.EMPTY);
+        } else { // different items: swap
+            s.stripSlots.set(box, carried);
+            menu.setCarried(inBox);
+        }
+        menu.sendAllDataToRemote(); // the client's cursor item and boxes follow
+    }
+
     static void strip(ServerPlayer p, Stomach s, SimpleContainer view) {
         int rank = s.rank(Perk.STRIP);
         if (rank < 1) {
             StomachLogic.say(p, Component.literal("You need the Enchant Stripper perk."));
             return;
         }
-        ItemStack src = view.getItem(0);
+        ItemStack src = s.stripSlots.get(0);
         if (src.isEmpty() || src.getCount() != 1 || src.is(Items.ENCHANTED_BOOK) || !src.isEnchanted()) {
-            StomachLogic.say(p, Component.literal("Put one piece of enchanted gear in the first slot."));
+            StomachLogic.say(p, Component.literal("Put one piece of enchanted gear in the first box."));
             return;
         }
         int lost = levelsLost(rank);
@@ -55,9 +99,13 @@ final class EnchantTools {
         }
         Component name = src.getHoverName();
         EnchantmentHelper.setEnchantments(new HashMap<>(), src); // the gear is plain now
-        ItemStack left = view.addItem(book);
-        if (!left.isEmpty()) ItemHandlerHelper.giveItemToPlayer(p, left); // storage full: the book goes to you
-        view.setChanged();
+        if (s.stripSlots.get(1).isEmpty()) {
+            s.stripSlots.set(1, book); // the book appears in the target box
+        } else {
+            ItemStack left = view.addItem(book);
+            if (!left.isEmpty()) ItemHandlerHelper.giveItemToPlayer(p, left); // storage full: the book goes to you
+            view.setChanged();
+        }
         StomachLogic.say(p, Component.literal("Stripped " + name.getString() + " into an enchanted book"
                 + (lost > 0 ? " (-" + lost + " level" + (lost > 1 ? "s" : "") + ")" : "")));
         StomachLogic.sound(p, GulpSound.DIGEST_BUTTON);
@@ -73,12 +121,12 @@ final class EnchantTools {
             StomachLogic.say(p, Component.literal("You need the Enchant Stripper perk."));
             return;
         }
-        ItemStack src = view.getItem(0);
-        ItemStack tgt = view.getItem(1);
+        ItemStack src = s.stripSlots.get(0);
+        ItemStack tgt = s.stripSlots.get(1);
         boolean srcBook = src.is(Items.ENCHANTED_BOOK);
         if (src.isEmpty() || tgt.isEmpty() || src.getCount() != 1 || tgt.getCount() != 1
                 || (!srcBook && !src.isEnchanted()) || tgt.is(Items.ENCHANTED_BOOK)) {
-            StomachLogic.say(p, Component.literal("Put the enchanted item in slot 1 and the item to enchant in slot 2."));
+            StomachLogic.say(p, Component.literal("Put the enchanted item in the first box and the item to enchant in the second."));
             return;
         }
         Map<Enchantment, Integer> from = new LinkedHashMap<>(EnchantmentHelper.getEnchantments(src));
@@ -108,7 +156,7 @@ final class EnchantTools {
         if (srcBook) {
             src.removeTagKey("StoredEnchantments");
             if (from.isEmpty()) {
-                view.setItem(0, new ItemStack(Items.BOOK)); // an emptied book is just a book
+                s.stripSlots.set(0, new ItemStack(Items.BOOK)); // an emptied book is just a book
             } else {
                 for (Map.Entry<Enchantment, Integer> e : from.entrySet()) {
                     EnchantedBookItem.addEnchantment(src, new EnchantmentInstance(e.getKey(), e.getValue()));
@@ -117,7 +165,6 @@ final class EnchantTools {
         } else {
             EnchantmentHelper.setEnchantments(from, src); // whatever didn't move stays on the source
         }
-        view.setChanged();
         StomachLogic.say(p, Component.literal("Moved " + moved + " enchantment" + (moved > 1 ? "s" : "") + " onto "
                 + tgt.getHoverName().getString()));
         StomachLogic.sound(p, GulpSound.DIGEST_BUTTON);

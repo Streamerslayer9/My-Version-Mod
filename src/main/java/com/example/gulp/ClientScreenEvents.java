@@ -70,7 +70,7 @@ public final class ClientScreenEvents {
         }).bounds(x, screen.getGuiTop(), width, 20).build();
         e.addListener(back);
 
-        // Enchant Stripper panel under Back: two boxes showing slot 1 and slot 2 (drawn in onStorageRender), and two bars.
+        // Enchant Stripper panel under Back: two item boxes (source and target, drawn in onStorageRender, clicked in onBoxClick), and two bars.
         int rank = ClientState.rank(Perk.STRIP);
         int lost = Math.max(0, 3 - rank);
         int barY = screen.getGuiTop() + PANEL_OFFSET_Y + BOX + 4;
@@ -80,12 +80,12 @@ public final class ClientScreenEvents {
         transfer.active = rank >= 1 && !ClientState.isHard();
         strip.setTooltip(Tooltip.create(Component.literal(rank < 1
                 ? "Needs the Enchant Stripper perk (stomach level 50)."
-                : "Strip the enchantments off the gear in slot 1 into an enchanted book in your storage. Levels lost per enchantment: " + lost + ".")));
+                : "Strip the enchantments off the gear in the first box into an enchanted book (it appears in the second box if that is empty, otherwise in your storage). Levels lost per enchantment: " + lost + ".")));
         transfer.setTooltip(Tooltip.create(Component.literal(rank < 1
                 ? "Needs the Enchant Stripper perk (stomach level 50)."
                 : ClientState.isHard()
                 ? "Soft mode only."
-                : "Move the enchantments from slot 1 onto the item in slot 2. Levels lost per enchantment: " + lost + ".")));
+                : "Move the enchantments from the first box onto the item in the second box. Levels lost per enchantment: " + lost + ".")));
         e.addListener(strip);
         e.addListener(transfer);
 
@@ -137,9 +137,39 @@ public final class ClientScreenEvents {
         return x < 2 ? screen.getGuiLeft() + screen.getXSize() + 4 : x;
     }
 
-    /** One of the two preview boxes: blue frame, the item inside, and a tooltip when hovered. */
+    /** Which Enchant Stripper box (0 or 1) the mouse is over, or -1. */
+    private static int boxAt(ContainerScreen screen, double mx, double my) {
+        int px = panelX(screen);
+        int py = screen.getGuiTop() + PANEL_OFFSET_Y;
+        for (int i = 0; i < 2; i++) {
+            int bx = px + i * (BOX + 4);
+            if (mx >= bx && mx < bx + BOX && my >= py && my < py + BOX) return i;
+        }
+        return -1;
+    }
+
+    /** Clicking a box works like clicking a slot: the server does the pick up / put down / swap with your cursor item. */
+    @SubscribeEvent
+    public static void onBoxClick(ScreenEvent.MouseButtonPressed.Pre e) {
+        if (!(e.getScreen() instanceof ContainerScreen screen)) return;
+        if (!Gulp.STORAGE_TITLE.equals(screen.getTitle().getString())) return;
+        int box = boxAt(screen, e.getMouseX(), e.getMouseY());
+        if (box < 0 || (e.getButton() != 0 && e.getButton() != 1)) return;
+        Net.send(15, box | (e.getButton() << 4) | (Screen.hasShiftDown() ? 1 << 5 : 0));
+        e.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onBoxRelease(ScreenEvent.MouseButtonReleased.Pre e) {
+        if (!(e.getScreen() instanceof ContainerScreen screen)) return;
+        if (!Gulp.STORAGE_TITLE.equals(screen.getTitle().getString())) return;
+        if (boxAt(screen, e.getMouseX(), e.getMouseY()) >= 0) e.setCanceled(true);
+    }
+
+    /** One of the two boxes: blue frame (brighter when hovered), the item inside, and a tooltip when hovered. */
     private static void renderBox(GuiGraphics g, Font font, int bx, int by, ItemStack stack, String empty, int mx, int my) {
-        g.fill(bx, by, bx + BOX, by + BOX, BLUE);
+        boolean hover = mx >= bx && mx < bx + BOX && my >= by && my < by + BOX;
+        g.fill(bx, by, bx + BOX, by + BOX, hover ? 0xFF6AA8F0 : BLUE);
         g.fill(bx + 1, by + 1, bx + BOX - 1, by + BOX - 1, 0xFF101A2A);
         if (!stack.isEmpty()) {
             g.renderItem(stack, bx + 4, by + 4);
@@ -169,13 +199,11 @@ public final class ClientScreenEvents {
         Font font = Minecraft.getInstance().font;
         GuiGraphics g = e.getGuiGraphics();
 
-        // Enchant Stripper boxes: slot 1 (source) and slot 2 (target), always the first two storage slots.
+        // Enchant Stripper boxes: the source (left) and the target (right). You click items into them like slots.
         int px = panelX(screen);
         int py = screen.getGuiTop() + PANEL_OFFSET_Y;
-        renderBox(g, font, px, py, screen.getMenu().getSlot(0).getItem(), "Slot 1: the enchanted gear", e.getMouseX(), e.getMouseY());
-        if (screen.getMenu().slots.size() > 1) {
-            renderBox(g, font, px + BOX + 4, py, screen.getMenu().getSlot(1).getItem(), "Slot 2: the item to enchant", e.getMouseX(), e.getMouseY());
-        }
+        renderBox(g, font, px, py, ClientState.stripSlot(0), "Source box: click the enchanted gear in here", e.getMouseX(), e.getMouseY());
+        renderBox(g, font, px + BOX + 4, py, ClientState.stripSlot(1), "Target box: click the item to enchant in here (Strip puts the book here)", e.getMouseX(), e.getMouseY());
 
         int progress = ClientState.digestProgress();
         int threshold = StomachItems.DIGEST_THRESHOLD;

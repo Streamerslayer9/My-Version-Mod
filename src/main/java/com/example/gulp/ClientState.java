@@ -29,6 +29,8 @@ public final class ClientState {
     private static int predator;
     private static float itemFill;
     private static int digestProgress;
+    private static net.minecraft.world.item.ItemStack strip0 = net.minecraft.world.item.ItemStack.EMPTY;
+    private static net.minecraft.world.item.ItemStack strip1 = net.minecraft.world.item.ItemStack.EMPTY;
     private static int level = 1, xp, xpNeeded = 100, points;
     private static float used, cap = 1.75f;
     private static int[] ranks = new int[Perk.values().length];
@@ -46,6 +48,8 @@ public final class ClientState {
         predator = m.predator;
         itemFill = m.itemFill;
         digestProgress = m.digestProgress;
+        strip0 = m.strip0;
+        strip1 = m.strip1;
         ranks = m.ranks;
         entries = m.entries;
     }
@@ -86,6 +90,8 @@ public final class ClientState {
         predator = 0;
         itemFill = 0f;
         digestProgress = 0;
+        strip0 = net.minecraft.world.item.ItemStack.EMPTY;
+        strip1 = net.minecraft.world.item.ItemStack.EMPTY;
         used = 0f;
         cap = 1.75f;
         ranks = new int[Perk.values().length];
@@ -122,6 +128,9 @@ public final class ClientState {
     public static int predator() { return predator; }
     public static float itemFill() { return itemFill; }
     public static int digestProgress() { return digestProgress; }
+
+    /** The Enchant Stripper boxes: 0 = source, 1 = target. */
+    public static net.minecraft.world.item.ItemStack stripSlot(int i) { return i == 0 ? strip0 : strip1; }
     public static int level() { return level; }
     public static int xp() { return xp; }
     public static int xpNeeded() { return xpNeeded; }
