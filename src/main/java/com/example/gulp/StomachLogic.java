@@ -151,6 +151,10 @@ public final class StomachLogic {
                 if (i >= 0) {
                     if (PlayerHolding.isPlayerEntry(s.contents.get(i))) {
                         StomachLogic.say(p, Component.literal("Players are only held, never digested."));
+                    } else if (s.contents.get(i).getBoolean("Safe")) {
+                        StomachLogic.say(p, Component.literal("They came in by invitation, so they can't be digested."));
+                    } else if (McaIntegration.isChildEntry(s.contents.get(i), p.serverLevel())) {
+                        StomachLogic.say(p, Component.literal("Children can never be digested."));
                     } else if (hardModeAllowed()) {
                         digest(p, s, s.contents.remove(i), true);
                     } else {
@@ -279,23 +283,35 @@ public final class StomachLogic {
             StomachLogic.say(p, Component.literal("That animal belongs to someone else."));
             return;
         }
+        swallowLiving(p, s, le, false);
+    }
+
+    /**
+     * Swallows a mob or villager (also used when a villager asks to be carried: safe = true, and they can never be digested).
+     * Children are never swallowed. @return true if it was swallowed
+     */
+    static boolean swallowLiving(ServerPlayer p, Stomach s, LivingEntity le, boolean safe) {
+        if (McaIntegration.isProtectedChild(le)) {
+            say(p, Component.empty().append(le.getName()).append(" is a child and can never be swallowed."));
+            return false;
+        }
         float size = Math.max(0.05f, le.getBbWidth() * le.getBbWidth() * le.getBbHeight());
         if (size > s.capacity()) {
             StomachLogic.say(p, Component.literal("Too big for your stomach! (needs " + Stomach.fmtVolume(size) + ", capacity " + Stomach.fmtVolume(s.capacity()) + ")"));
-            return;
+            return false;
         }
         if (s.used() + size > s.capacity()) {
             StomachLogic.say(p, Component.literal("Your stomach is too full."));
-            return;
+            return false;
         }
         if (s.contents.size() >= Stomach.MAX_MOBS) {
             StomachLogic.say(p, Component.literal("You can't hold more than " + Stomach.MAX_MOBS + " creatures at once."));
-            return;
+            return false;
         }
         le.stopRiding();
-        McaIntegration.onSwallow(p, s, le); // MCA villagers react first, so what they feel is saved with them
+        McaIntegration.onSwallow(p, s, le, safe); // MCA villagers react first, so what they feel is saved with them
         CompoundTag tag = new CompoundTag();
-        if (!le.save(tag)) return;
+        if (!le.save(tag)) return false;
 
         CompoundTag entry = new CompoundTag();
         entry.put("Entity", tag);
@@ -311,9 +327,12 @@ public final class StomachLogic {
         entry.putString("NameJson", Component.Serializer.toJson(displayName));
         entry.putInt("Uid", p.getRandom().nextInt());
 
+        entry.putBoolean("Safe", safe); // invited rides are never digested
+        McaIntegration.tagEntry(entry, le, p); // how they feel, so they can comment from inside
         le.discard();
         s.contents.add(entry);
         finishSwallow(p, s, displayName);
+        return true;
     }
 
     /** Starts the swallow cooldown, plays the sound and shows the message. */
@@ -507,6 +526,17 @@ public final class StomachLogic {
                 continue;
             }
             e.putInt("HeldTicks", e.getInt("HeldTicks") + 1); // how long this mob has been inside
+            if (McaIntegration.isChildEntry(e, p.serverLevel())) {
+                // A child is never held (an old save, or a child that was there before this rule): let them out.
+                if (release(p, e)) {
+                    it.remove();
+                    changed = true;
+                    StomachLogic.say(p, Component.empty().append(entryName(e)).append(" is a child and was let out. Children can never be swallowed."));
+                }
+                continue;
+            }
+            McaIntegration.tickInside(p, e, hardNow); // a villager who likes you may comment from inside
+            if (e.getBoolean("Safe")) continue;       // invited rides are never digested, hurt you, or dissolved
             if (hardNow) {
                 // Phase 1: the digestion bar fills up.
                 int d = e.getInt("Digest");

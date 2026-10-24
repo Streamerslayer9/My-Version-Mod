@@ -74,7 +74,17 @@ public final class ServerEvents {
                 .then(Commands.literal("decline").executes(c -> {
                     VoreRequests.respond(c.getSource().getPlayerOrException(), false);
                     return 1;
-                })));
+                }))
+                // /gulp carry accept|decline: the answer to a villager who asked to be carried
+                .then(Commands.literal("carry")
+                        .then(Commands.literal("accept").executes(c -> {
+                            McaIntegration.respondCarry(c.getSource().getPlayerOrException(), true);
+                            return 1;
+                        }))
+                        .then(Commands.literal("decline").executes(c -> {
+                            McaIntegration.respondCarry(c.getSource().getPlayerOrException(), false);
+                            return 1;
+                        }))));
     }
 
     // Anyone swallowed (or swallowing) when a player leaves is let out, so nobody is left stuck as a spectator.
@@ -116,6 +126,7 @@ public final class ServerEvents {
         if (e.phase != TickEvent.Phase.END) return;
         var server = ServerLifecycleHooks.getCurrentServer();
         if (server != null && server.getTickCount() % 10 == 0) McaIntegration.tickScared(server);
+        if (server != null && server.getTickCount() % 100 == 0) McaIntegration.tickAffection(server);
     }
 
     @SubscribeEvent

@@ -34,6 +34,10 @@ public final class GulpServerConfig {
     public static final ForgeConfigSpec.IntValue MCA_PREDATOR_DECAY_SECONDS;
     public static final ForgeConfigSpec.BooleanValue MCA_PANIC;
     public static final ForgeConfigSpec.BooleanValue DEV_LEVEL_UP_ENABLED;
+    public static final ForgeConfigSpec.BooleanValue MCA_MEMORY_ENABLED;
+    public static final ForgeConfigSpec.BooleanValue MCA_AFFECTION_ENABLED;
+    public static final ForgeConfigSpec.IntValue MCA_AFFECTION_HEARTS;
+    public static final ForgeConfigSpec.IntValue MCA_REQUEST_COOLDOWN_SECONDS;
     public static final ForgeConfigSpec.BooleanValue MCA_STATUS_MESSAGE;
 
     static {
@@ -127,6 +131,20 @@ public final class GulpServerConfig {
         MCA_PANIC = b
                 .comment("If true, villagers who see you swallow or digest a villager run from you for a few seconds.")
                 .define("mcaVillagersPanic", true);
+        MCA_MEMORY_ENABLED = b
+                .comment("Villagers remember being swallowed, released, or seeing it happen: written to the villager's own saved data",
+                        "and into MCA's long-term memory, where MCA dialogue and the MCA: Conversations add-on can read it.")
+                .define("mcaMemoryEnabled", true);
+        MCA_AFFECTION_ENABLED = b
+                .comment("Villagers who like you enough may ask to be carried safely (soft mode only, they can never be digested),",
+                        "and comment on being inside. Children are never swallowed, whatever this is set to.")
+                .define("mcaAffectionEnabled", true);
+        MCA_AFFECTION_HEARTS = b
+                .comment("MCA hearts a villager needs with you before they will ask to be carried or comment from inside.")
+                .defineInRange("mcaAffectionHearts", 60, 1, 500);
+        MCA_REQUEST_COOLDOWN_SECONDS = b
+                .comment("How long a villager waits before asking to be carried again.")
+                .defineInRange("mcaRequestCooldownSeconds", 600, 30, 36000);
         MCA_STATUS_MESSAGE = b
                 .comment("Test/dev helper: when a player joins, show a chat line saying whether this mod connected to Minecraft Comes Alive.",
                         "Set to false to turn it off once you've confirmed it works.")
