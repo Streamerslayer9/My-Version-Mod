@@ -1,0 +1,152 @@
+{
+  "answers": [
+    {
+      "name": "gulp_tummy",
+      "results": [
+        {
+          "baseChance": 0,
+          "conditions": [
+            {
+              "chance": 1000,
+              "memory": {
+                "id": "gulp.swallowed.hard",
+                "var": "player"
+              }
+            }
+          ],
+          "actions": {
+            "next": "conversations.cat.events",
+            "say": "conversations.gulp.hard"
+          }
+        },
+        {
+          "baseChance": 0,
+          "conditions": [
+            {
+              "chance": 600,
+              "memory": {
+                "id": "gulp.swallowed.soft",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.swallowed.hard",
+                "var": "player"
+              }
+            }
+          ],
+          "actions": {
+            "next": "conversations.cat.events",
+            "say": "conversations.gulp.soft"
+          }
+        },
+        {
+          "baseChance": 0,
+          "conditions": [
+            {
+              "chance": 300,
+              "memory": {
+                "id": "gulp.witnessed.digest",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.swallowed.soft",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.swallowed.hard",
+                "var": "player"
+              }
+            }
+          ],
+          "actions": {
+            "next": "conversations.cat.events",
+            "say": "conversations.gulp.witness"
+          }
+        },
+        {
+          "baseChance": 0,
+          "conditions": [
+            {
+              "chance": 200,
+              "memory": {
+                "id": "gulp.witnessed.swallow",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.witnessed.digest",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.swallowed.soft",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.swallowed.hard",
+                "var": "player"
+              }
+            }
+          ],
+          "actions": {
+            "next": "conversations.cat.events",
+            "say": "conversations.gulp.saw"
+          }
+        },
+        {
+          "baseChance": 1,
+          "conditions": [
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.swallowed.soft",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.swallowed.hard",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.witnessed.digest",
+                "var": "player"
+              }
+            },
+            {
+              "chance": -2000,
+              "memory": {
+                "id": "gulp.witnessed.swallow",
+                "var": "player"
+              }
+            }
+          ],
+          "actions": {
+            "next": "conversations.cat.events",
+            "say": "conversations.gulp.none"
+          }
+        }
+      ]
+    }
+  ]
+}

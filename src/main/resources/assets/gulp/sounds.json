@@ -1,0 +1,80 @@
+{
+  "swallow": {
+    "sounds": [
+      "gulp:gulp1_nasally",
+      "gulp:gulp3_nasalhard",
+      "gulp:gulp5_solidish",
+      "gulp:gulp6_liquid",
+      "gulp:gulp7_hard",
+      "gulp:gulp8_hardchug",
+      "gulp:gulp8_smoothliquidy",
+      "gulp:gulp9_hardchugy",
+      "gulp:gulp9_liquidnasal",
+      "gulp:gulp10_verydirect",
+      "gulp:gulp11_weirddeep",
+      "gulp:gulp12_weirddeep"
+    ]
+  },
+  "release": {
+    "sounds": [
+      "gulp:dropping1",
+      "gulp:dropping2",
+      "gulp:dropping3"
+    ]
+  },
+  "digest": {
+    "sounds": [
+      "gulp:digestion1",
+      "gulp:digestion2",
+      "gulp:digestion3"
+    ]
+  },
+  "digest_button": {
+    "sounds": [
+      "gulp:digestion_button"
+    ]
+  },
+  "screen_loop": {
+    "sounds": [
+      {
+        "name": "gulp:screen_loop",
+        "stream": true
+      }
+    ]
+  },
+  "swallow_loud": {
+    "sounds": [
+      "gulp:gulp1_nasally_loud",
+      "gulp:gulp3_nasalhard_loud",
+      "gulp:gulp5_solidish_loud",
+      "gulp:gulp6_liquid_loud",
+      "gulp:gulp7_hard_loud",
+      "gulp:gulp8_hardchug_loud",
+      "gulp:gulp8_smoothliquidy_loud",
+      "gulp:gulp9_hardchugy_loud",
+      "gulp:gulp9_liquidnasal_loud",
+      "gulp:gulp10_verydirect_loud",
+      "gulp:gulp11_weirddeep_loud",
+      "gulp:gulp12_weirddeep_loud"
+    ]
+  },
+  "release_loud": {
+    "sounds": [
+      "gulp:dropping1_loud",
+      "gulp:dropping2_loud",
+      "gulp:dropping3_loud"
+    ]
+  },
+  "digest_loud": {
+    "sounds": [
+      "gulp:digestion1_loud",
+      "gulp:digestion2_loud",
+      "gulp:digestion3_loud"
+    ]
+  },
+  "digest_button_loud": {
+    "sounds": [
+      "gulp:digestion_button_loud"
+    ]
+  }
+}

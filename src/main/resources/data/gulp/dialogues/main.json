@@ -1,0 +1,16 @@
+{
+  "silent": true,
+  "answers": [
+    {
+      "name": "gulp_talk",
+      "results": [
+        {
+          "baseChance": 1,
+          "actions": {
+            "next": "gulp.talk"
+          }
+        }
+      ]
+    }
+  ]
+}
