@@ -75,6 +75,11 @@ public final class ServerEvents {
                     VoreRequests.respond(c.getSource().getPlayerOrException(), false);
                     return 1;
                 }))
+                // /gulp villagerinfo: why isn't the nearest villager asking to be carried?
+                .then(Commands.literal("villagerinfo").executes(c -> {
+                    McaIntegration.debugNearest(c.getSource().getPlayerOrException());
+                    return 1;
+                }))
                 // /gulp carry accept|decline: the answer to a villager who asked to be carried
                 .then(Commands.literal("carry")
                         .then(Commands.literal("accept").executes(c -> {

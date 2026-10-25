@@ -140,8 +140,9 @@ public final class GulpServerConfig {
                         "and comment on being inside. Children are never swallowed, whatever this is set to.")
                 .define("mcaAffectionEnabled", true);
         MCA_AFFECTION_HEARTS = b
-                .comment("MCA hearts a villager needs with you before they will ask to be carried or comment from inside.")
-                .defineInRange("mcaAffectionHearts", 60, 1, 500);
+                .comment("MCA hearts a villager needs with you before they will ask to be carried or comment from inside.",
+                        "Brand-new villagers have 0 hearts with you, so set this to 0 to test. Type /gulp villagerinfo next to a villager to see their hearts.")
+                .defineInRange("mcaAffectionHearts", 60, 0, 500);
         MCA_REQUEST_COOLDOWN_SECONDS = b
                 .comment("How long a villager waits before asking to be carried again.")
                 .defineInRange("mcaRequestCooldownSeconds", 600, 30, 36000);

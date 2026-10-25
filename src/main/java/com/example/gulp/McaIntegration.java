@@ -598,4 +598,52 @@ public final class McaIntegration {
             StomachLogic.sync(p, s);
         }
     }
+
+    /** /gulp villagerinfo: tells you why the nearest villager isn't asking to be carried (or that they would). */
+    public static void debugNearest(ServerPlayer p) {
+        Stomach s = StomachManager.get(p.getServer()).of(p.getUUID());
+        long now = p.getServer().getTickCount();
+        List<String> why = new ArrayList<>();
+        if (!GulpServerConfig.MCA_AFFECTION_ENABLED.get()) why.add("mcaAffectionEnabled is false in the config.");
+        if (!active()) why.add("MCA integration is off or didn't match MCA (see latest.log).");
+        if (!s.role.canEat()) why.add("Your role is " + s.role.label + ", which can't swallow.");
+        if (s.hard && GulpServerConfig.HARD_MODE_ENABLED.get()) why.add("You're in hard mode: requests only come in soft mode.");
+        if (OFFERS.containsKey(p.getUUID())) why.add("A request is already waiting for your answer.");
+        Long pc = PLAYER_COOLDOWN.get(p.getUUID());
+        if (pc != null && pc > now) why.add("You had a request recently: wait " + (pc - now) / 20 + "s.");
+
+        Entity nearest = null;
+        double best = Double.MAX_VALUE;
+        if (active()) {
+            for (Entity e : p.level().getEntities(p, p.getBoundingBox().inflate(8), McaIntegration::isVillager)) {
+                double d = p.distanceToSqr(e);
+                if (d < best) { best = d; nearest = e; }
+            }
+        }
+        p.sendSystemMessage(Component.literal("[Gulp] villager check:").withStyle(ChatFormatting.AQUA));
+        if (nearest == null) {
+            why.add(active() ? "No MCA villager within 8 blocks." : "No villager check possible.");
+        } else if (nearest instanceof LivingEntity le) {
+            int hearts = heartsWith(le, p);
+            int need = GulpServerConfig.MCA_AFFECTION_HEARTS.get();
+            Attitude a = attitude(le);
+            p.sendSystemMessage(Component.literal("Nearest: ").append(le.getName()).append(
+                    " | personality " + personalityOf(le) + " (" + a + ") | hearts " + hearts + " (needs " + need + ")"
+                    + " | child: " + isProtectedChild(le)));
+            if (isProtectedChild(le)) why.add("They are a child: never asked, never swallowed.");
+            if (a == Attitude.FEARFUL) why.add("Fearful personalities never ask.");
+            if (hearts < need) why.add("Hearts " + hearts + " is below " + need + ". Talk to them or give gifts, or lower mcaAffectionHearts.");
+            Long vc = VILLAGER_COOLDOWN.get(le.getUUID());
+            if (vc != null && vc > now) why.add("They asked recently: wait " + (vc - now) / 20 + "s.");
+            float size = Math.max(0.05f, le.getBbWidth() * le.getBbWidth() * le.getBbHeight());
+            if (size > s.capacity() || s.used() + size > s.capacity() || s.contents.size() >= Stomach.MAX_MOBS) {
+                why.add("They wouldn't fit in your stomach right now.");
+            }
+        }
+        if (why.isEmpty()) {
+            p.sendSystemMessage(Component.literal("Nothing is blocking a request. They ask on a random check every 5 seconds.").withStyle(ChatFormatting.GREEN));
+        } else {
+            for (String w : why) p.sendSystemMessage(Component.literal("- " + w).withStyle(ChatFormatting.YELLOW));
+        }
+    }
 }
