@@ -456,6 +456,11 @@ public final class McaIntegration {
                         + "(MCA: Conversations won't see these memories.)", t);
             }
         }
+        // Milestones the dialogue can tell apart from "once": a few rides, a regular passenger, a regular invited passenger.
+        int times = mine.getInt(id);
+        if (id.equals("gulp.swallowed") && times == 3) remember(villager, player, "gulp.swallowed.many");
+        else if (id.equals("gulp.swallowed") && times == 10) remember(villager, player, "gulp.swallowed.lots");
+        else if (id.equals("gulp.invited") && times == 3) remember(villager, player, "gulp.invited.many");
     }
 
     private static int memoryCount(Entity villager, UUID player, String id) {
