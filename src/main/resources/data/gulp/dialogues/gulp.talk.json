@@ -1,267 +1,82 @@
 {
-  "answers": [
+ "answers": [
+  {
+   "name": "go_memories",
+   "constraints": "adult",
+   "results": [
     {
-      "name": "remember",
-      "results": [
-        {
-          "baseChance": 0,
-          "conditions": [
-            {
-              "chance": 1000,
-              "memory": {
-                "id": "gulp.swallowed.hard",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "conversations.gulp.hard"
-          }
-        },
-        {
-          "baseChance": 0,
-          "conditions": [
-            {
-              "chance": 600,
-              "memory": {
-                "id": "gulp.swallowed.soft",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.swallowed.hard",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "conversations.gulp.soft"
-          }
-        },
-        {
-          "baseChance": 0,
-          "conditions": [
-            {
-              "chance": 300,
-              "memory": {
-                "id": "gulp.witnessed.digest",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.swallowed.soft",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.swallowed.hard",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "conversations.gulp.witness"
-          }
-        },
-        {
-          "baseChance": 0,
-          "conditions": [
-            {
-              "chance": 200,
-              "memory": {
-                "id": "gulp.witnessed.swallow",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.witnessed.digest",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.swallowed.soft",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.swallowed.hard",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "conversations.gulp.saw"
-          }
-        },
-        {
-          "baseChance": 1,
-          "conditions": [
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.swallowed.soft",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.swallowed.hard",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.witnessed.digest",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.witnessed.swallow",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "conversations.gulp.none"
-          }
-        }
-      ]
-    },
-    {
-      "name": "saw",
-      "results": [
-        {
-          "baseChance": 0,
-          "conditions": [
-            {
-              "chance": 1000,
-              "memory": {
-                "id": "gulp.witnessed.digest",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "gulp.talk.saw.digest"
-          }
-        },
-        {
-          "baseChance": 0,
-          "conditions": [
-            {
-              "chance": 600,
-              "memory": {
-                "id": "gulp.witnessed.swallow",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.witnessed.digest",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "gulp.talk.saw.swallow"
-          }
-        },
-        {
-          "baseChance": 1,
-          "conditions": [
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.witnessed.digest",
-                "var": "player"
-              }
-            },
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.witnessed.swallow",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "gulp.talk.saw.none"
-          }
-        }
-      ]
-    },
-    {
-      "name": "invited",
-      "results": [
-        {
-          "baseChance": 0,
-          "conditions": [
-            {
-              "chance": 1000,
-              "memory": {
-                "id": "gulp.invited",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "gulp.talk.invited.yes"
-          }
-        },
-        {
-          "baseChance": 1,
-          "conditions": [
-            {
-              "chance": -2000,
-              "memory": {
-                "id": "gulp.invited",
-                "var": "player"
-              }
-            }
-          ],
-          "actions": {
-            "next": "gulp.talk",
-            "say": "gulp.talk.invited.none"
-          }
-        }
-      ]
-    },
-    {
-      "name": "back",
-      "results": [
-        {
-          "baseChance": 1,
-          "actions": {
-            "next": "main"
-          }
-        }
-      ]
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.memories"
+     }
     }
-  ]
+   ]
+  },
+  {
+   "name": "go_feelings",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.feelings"
+     }
+    }
+   ]
+  },
+  {
+   "name": "go_play",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play"
+     }
+    }
+   ]
+  },
+  {
+   "name": "go_gossip",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip"
+     }
+    }
+   ]
+  },
+  {
+   "name": "go_ask",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask"
+     }
+    }
+   ]
+  },
+  {
+   "name": "back",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "main"
+     }
+    }
+   ]
+  }
+ ]
 }

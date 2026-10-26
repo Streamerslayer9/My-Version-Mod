@@ -1,16 +1,18 @@
 {
-  "silent": true,
-  "answers": [
+ "silent": true,
+ "answers": [
+  {
+   "name": "gulp_talk",
+   "constraints": "adult",
+   "results": [
     {
-      "name": "gulp_talk",
-      "results": [
-        {
-          "baseChance": 1,
-          "actions": {
-            "next": "gulp.talk"
-          }
-        }
-      ]
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk"
+     }
     }
-  ]
+   ]
+  }
+ ]
 }
