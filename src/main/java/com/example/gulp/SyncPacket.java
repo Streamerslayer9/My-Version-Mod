@@ -13,6 +13,7 @@ import java.util.function.Supplier;
 /** Server -> client: everything the HUD and the stomach/perk screens need. */
 public class SyncPacket {
     public boolean hard;
+    public boolean instantDigest;
     public int level, xp, xpNeeded, points;
     public int role;
     public int predator;
@@ -27,6 +28,7 @@ public class SyncPacket {
     public static SyncPacket from(Stomach s) {
         SyncPacket m = new SyncPacket();
         m.hard = s.hard && GulpServerConfig.HARD_MODE_ENABLED.get(); // show SOFT if the server has hard mode off
+        m.instantDigest = s.instantDigest;
         m.level = s.level;
         m.xp = s.xp;
         m.xpNeeded = Stomach.xpForNext(s.level);
@@ -53,6 +55,7 @@ public class SyncPacket {
 
     public static void encode(SyncPacket m, FriendlyByteBuf buf) {
         buf.writeBoolean(m.hard);
+        buf.writeBoolean(m.instantDigest);
         buf.writeInt(m.level);
         buf.writeInt(m.xp);
         buf.writeInt(m.xpNeeded);
@@ -82,6 +85,7 @@ public class SyncPacket {
     public static SyncPacket decode(FriendlyByteBuf buf) {
         SyncPacket m = new SyncPacket();
         m.hard = buf.readBoolean();
+        m.instantDigest = buf.readBoolean();
         m.level = buf.readInt();
         m.xp = buf.readInt();
         m.xpNeeded = buf.readInt();

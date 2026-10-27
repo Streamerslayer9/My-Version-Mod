@@ -18,6 +18,7 @@ public final class ClientState {
     public record EntryInfo(int uid, Component name, String typeId, float size, float hp, float maxHp, float digest) { }
 
     private static boolean hard;
+    private static boolean instantDigest;
     // While swallowed: 0 = not, 1 = soft, 2 = hard, plus who holds you, how digested you are and your escape chance.
     private static int heldMode;
     private static String heldHolder = "";
@@ -38,6 +39,7 @@ public final class ClientState {
 
     public static void apply(SyncPacket m) {
         hard = m.hard;
+        instantDigest = m.instantDigest;
         level = m.level;
         xp = m.xp;
         xpNeeded = m.xpNeeded;
@@ -80,6 +82,7 @@ public final class ClientState {
     /** Forget everything (called when you leave a world/server so nothing carries over to the next one). */
     public static void reset() {
         hard = false;
+        instantDigest = false;
         level = 1;
         xp = 0;
         xpNeeded = Stomach.xpForNext(1);
@@ -102,6 +105,7 @@ public final class ClientState {
     }
 
     public static boolean isHard() { return hard; }
+    public static boolean isInstantDigest() { return instantDigest; }
     public static Role role() { return role; }
 
     public static void setHeld(int mode, String holder, float progress, float chance) {
@@ -143,7 +147,7 @@ public final class ClientState {
     /** Changes whenever the screens need to rebuild their buttons. */
     public static String signature() {
         StringBuilder sb = new StringBuilder();
-        sb.append(hard).append('|').append(points).append('|').append(Arrays.toString(ranks)).append('|');
+        sb.append(hard).append(instantDigest).append('|').append(points).append('|').append(Arrays.toString(ranks)).append('|');
         for (EntryInfo e : entries) sb.append(e.uid()).append(',');
         return sb.toString();
     }

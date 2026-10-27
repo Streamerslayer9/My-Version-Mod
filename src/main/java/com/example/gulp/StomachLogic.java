@@ -85,6 +85,7 @@ public final class StomachLogic {
     // 0 swallow | 1 toggle mode | 2 release last | 3 release all
     // 4 release entry (arg = uid) | 5 digest entry now (arg = uid) | 6 buy perk (arg = perk index)
     // 7 open item storage | 8 set your role (arg = Role ordinal)
+    // 17 settings: instant Digest button on / off (arg 1 / 0)
     // 16 destroy the enchantments on the source box (nothing is made)
     // 15 click on an Enchant Stripper box (arg = box | button << 4 | shift << 5)
     // 14 dev shortcut: one instant level (1 + P)
@@ -149,7 +150,9 @@ public final class StomachLogic {
             case 5 -> {
                 int i = indexOf(s, arg);
                 if (i >= 0) {
-                    if (PlayerHolding.isPlayerEntry(s.contents.get(i))) {
+                    if (!s.instantDigest) {
+                        StomachLogic.say(p, Component.literal("Instant digest is turned off. You can turn it on in Settings."));
+                    } else if (PlayerHolding.isPlayerEntry(s.contents.get(i))) {
                         StomachLogic.say(p, Component.literal("Players are only held, never digested."));
                     } else if (s.contents.get(i).getBoolean("Safe")) {
                         StomachLogic.say(p, Component.literal("They came in by invitation, so they can't be digested."));
@@ -164,6 +167,11 @@ public final class StomachLogic {
             }
             case 7 -> openStorage(p, mgr, s);
             case 9 -> swallowFromInventorySlot(p, s, arg);
+            case 17 -> {
+                // Settings: turn the instant Digest button on (arg 1) or off (arg 0).
+                s.instantDigest = arg != 0;
+                say(p, Component.literal("Instant digest button: " + (s.instantDigest ? "ON" : "OFF")));
+            }
             case 14 -> {
                 // Dev shortcut (1 + P): one instant level, through the normal level-up (points, sound, message).
                 if (!GulpServerConfig.DEV_LEVEL_UP_ENABLED.get() && !p.hasPermissions(2)) {

@@ -32,6 +32,8 @@ public class Stomach {
     }
 
     public boolean hard = false;
+    /** Shows the Digest button next to each mob on the stomach screen. Off by default; the player turns it on in Settings. */
+    public boolean instantDigest = false;
     public int level = 1;
     public int xp = 0;
     public int points = 0;                                  // unspent perk points
@@ -185,6 +187,7 @@ public class Stomach {
         for (Perk p : Perk.values()) perks.putInt(p.name(), ranks[p.ordinal()]);
         nbt.put("Perks", perks);
         nbt.putString("Role", role.name());
+        nbt.putBoolean("InstantDigest", instantDigest);
         nbt.putInt("Predator", predator);
         nbt.putInt("DigestProgress", digestProgress);
         nbt.put("Storage", ContainerHelper.saveAllItems(new CompoundTag(), storage));
@@ -204,6 +207,7 @@ public class Stomach {
         // Saves from before roles existed only had the "let players swallow me" switch: ON became Both, OFF became Pred.
         Role saved = nbt.contains("Role") ? Role.byName(nbt.getString("Role")) : null;
         s.role = saved != null ? saved : (nbt.getBoolean("AllowSwallowed") ? Role.BOTH : Role.PRED);
+        s.instantDigest = nbt.getBoolean("InstantDigest"); // missing in older saves = off
         s.predator = Math.max(0, nbt.getInt("Predator"));
         s.digestProgress = Math.max(0, Math.min(StomachItems.DIGEST_THRESHOLD - 1, nbt.getInt("DigestProgress")));
         ContainerHelper.loadAllItems(nbt.getCompound("Storage"), s.storage);
