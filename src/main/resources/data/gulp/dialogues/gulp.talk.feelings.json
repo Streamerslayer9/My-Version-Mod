@@ -1,0 +1,1178 @@
+{
+ "answers": [
+  {
+   "name": "scared",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.hardtimid"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.wd"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.tough"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.cheer"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ],
+       "hearts_max": 40
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.timidlow"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ],
+       "hearts_max": 40
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.high"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.scared.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ],
+       "hearts_max": 40
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "trust",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.trust.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.trust.invhigh"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.trust.high"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_max": 24
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.trust.low"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.trust.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "hearts_max": 24
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "again",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.again.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.again.invm"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.again.inv"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.again.soft"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.again.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "warm",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.warm.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.warm.inv"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.warm.soft"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.warm.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "heartbeat",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.heartbeat.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.heartbeat.inv"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.heartbeat.soft"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.heartbeat.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "today",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "mood": "overjoyed"
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.overjoyed"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "mood": "happy"
+      },
+      {
+       "chance": -2000,
+       "mood": "overjoyed"
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.happy"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "mood": "fine"
+      },
+      {
+       "chance": -2000,
+       "mood": "overjoyed"
+      },
+      {
+       "chance": -2000,
+       "mood": "happy"
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.fine"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "mood": "passive"
+      },
+      {
+       "chance": -2000,
+       "mood": "overjoyed"
+      },
+      {
+       "chance": -2000,
+       "mood": "happy"
+      },
+      {
+       "chance": -2000,
+       "mood": "fine"
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.passive"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "mood": "unhappy"
+      },
+      {
+       "chance": -2000,
+       "mood": "overjoyed"
+      },
+      {
+       "chance": -2000,
+       "mood": "happy"
+      },
+      {
+       "chance": -2000,
+       "mood": "fine"
+      },
+      {
+       "chance": -2000,
+       "mood": "passive"
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.unhappy"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "mood": "sad"
+      },
+      {
+       "chance": -2000,
+       "mood": "overjoyed"
+      },
+      {
+       "chance": -2000,
+       "mood": "happy"
+      },
+      {
+       "chance": -2000,
+       "mood": "fine"
+      },
+      {
+       "chance": -2000,
+       "mood": "passive"
+      },
+      {
+       "chance": -2000,
+       "mood": "unhappy"
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.sad"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "mood": "depressed"
+      },
+      {
+       "chance": -2000,
+       "mood": "overjoyed"
+      },
+      {
+       "chance": -2000,
+       "mood": "happy"
+      },
+      {
+       "chance": -2000,
+       "mood": "fine"
+      },
+      {
+       "chance": -2000,
+       "mood": "passive"
+      },
+      {
+       "chance": -2000,
+       "mood": "unhappy"
+      },
+      {
+       "chance": -2000,
+       "mood": "sad"
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.depressed"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.feelings",
+      "say": "gulp.say.today.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "mood": "overjoyed"
+      },
+      {
+       "chance": -2000,
+       "mood": "happy"
+      },
+      {
+       "chance": -2000,
+       "mood": "fine"
+      },
+      {
+       "chance": -2000,
+       "mood": "passive"
+      },
+      {
+       "chance": -2000,
+       "mood": "unhappy"
+      },
+      {
+       "chance": -2000,
+       "mood": "sad"
+      },
+      {
+       "chance": -2000,
+       "mood": "depressed"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "back",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk"
+     }
+    }
+   ]
+  }
+ ]
+}

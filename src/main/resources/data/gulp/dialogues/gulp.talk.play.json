@@ -1,0 +1,565 @@
+{
+ "answers": [
+  {
+   "name": "guess",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r6"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r7"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r8"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r9"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.guess.r10"
+     }
+    }
+   ]
+  },
+  {
+   "name": "joke",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r6"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r7"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r8"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.joke.r9"
+     }
+    }
+   ]
+  },
+  {
+   "name": "fortune",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r6"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r7"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.fortune.r8"
+     }
+    }
+   ]
+  },
+  {
+   "name": "dare",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.dare.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.dare.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.dare.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.dare.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.dare.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.dare.r6"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.dare.r7"
+     }
+    }
+   ]
+  },
+  {
+   "name": "compliment",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      }
+     ],
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.play",
+      "say": "gulp.say.compliment.cheer"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      }
+     ],
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.play",
+      "say": "gulp.say.compliment.tough"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      }
+     ],
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.play",
+      "say": "gulp.say.compliment.timid"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "conversations_personality": [
+        "relaxed",
+        "peaceful",
+        "odd",
+        "lazy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      }
+     ],
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.play",
+      "say": "gulp.say.compliment.calm"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.compliment.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "peppy",
+        "upbeat",
+        "playful",
+        "friendly",
+        "extroverted"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "confident",
+        "crabby",
+        "greedy",
+        "grumpy",
+        "athletic"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "anxious",
+        "sensitive",
+        "introverted",
+        "gloomy",
+        "shy"
+       ]
+      },
+      {
+       "chance": -2000,
+       "conversations_personality": [
+        "relaxed",
+        "peaceful",
+        "odd",
+        "lazy"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "hide",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.hide.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.hide.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.hide.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.hide.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.hide.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.play",
+      "say": "gulp.say.hide.r6"
+     }
+    }
+   ]
+  },
+  {
+   "name": "back",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,432 @@
+{
+ "answers": [
+  {
+   "name": "rumor",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.rumor.wd"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.rumor.lots"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.rumor.ws"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.rumor.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "famous",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.famous.lots"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.famous.many"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.famous.ws"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.famous.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "fear",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.fear.wd"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.fear.high"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.fear.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "advice",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r6"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r7"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.advice.r8"
+     }
+    }
+   ]
+  },
+  {
+   "name": "news",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.news.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.news.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.news.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.news.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.news.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.news.r6"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.gossip",
+      "say": "gulp.say.news.r7"
+     }
+    }
+   ]
+  },
+  {
+   "name": "back",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk"
+     }
+    }
+   ]
+  }
+ ]
+}

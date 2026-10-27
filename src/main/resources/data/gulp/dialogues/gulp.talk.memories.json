@@ -1,0 +1,793 @@
+{
+ "answers": [
+  {
+   "name": "ride",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.invm"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.inv"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.many"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.soft"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.wd"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.ws"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.ride.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "first",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.first.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.first.inv"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.first.soft"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.first.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "longest",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.long_ride",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.longest.long"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.longest.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.long_ride",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "regular",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.regular.lots"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.regular.many"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.regular.any"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.regular.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.lots",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.many",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "saw",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.saw.wd"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.saw.ws"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.saw.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.digest",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.witnessed.swallow",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "forgive",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_max": 24
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.forgive.low"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_max": 24
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.forgive.high"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_max": 24
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_min": 60
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.forgive.mid"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.memories",
+      "say": "gulp.say.forgive.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_max": 24
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "back",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk"
+     }
+    }
+   ]
+  }
+ ]
+}

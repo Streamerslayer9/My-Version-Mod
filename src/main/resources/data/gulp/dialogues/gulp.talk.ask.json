@@ -1,0 +1,598 @@
+{
+ "answers": [
+  {
+   "name": "howto",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.howto.r1"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.howto.r2"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.howto.r3"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.howto.r4"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.howto.r5"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.howto.r6"
+     }
+    }
+   ]
+  },
+  {
+   "name": "offer",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.offer.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.offer.invhigh"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.offer.high"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_min": 25
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.offer.mid"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.offer.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       },
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 25
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "safe",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.safe.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.safe.inv"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.safe.high"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_max": 24
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.safe.low"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.safe.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "hearts_max": 24
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "promise",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.promise.hard"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": false,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_max": 24
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.promise.low"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": true,
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.promise.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "hearts_max": 24
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "sorry",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_min": 25
+      }
+     ],
+     "actions": {
+      "positive": 2,
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.sorry.high"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_min": 25
+      }
+     ],
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.sorry.hard"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.sorry.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       },
+       "hearts_min": 25
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.hard",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "thanks",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "positive": 2,
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.thanks.inv"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      }
+     ],
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.thanks.high"
+     }
+    },
+    {
+     "baseChance": 0,
+     "applyFatigue": true,
+     "conditions": [
+      {
+       "chance": 1000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      }
+     ],
+     "actions": {
+      "positive": 1,
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.thanks.soft"
+     }
+    },
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk.ask",
+      "say": "gulp.say.thanks.none"
+     },
+     "conditions": [
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.invited",
+        "var": "player"
+       }
+      },
+      {
+       "chance": -2000,
+       "hearts_min": 60
+      },
+      {
+       "chance": -2000,
+       "memory": {
+        "id": "gulp.swallowed.soft",
+        "var": "player"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "back",
+   "constraints": "adult",
+   "results": [
+    {
+     "baseChance": 1,
+     "applyFatigue": false,
+     "actions": {
+      "next": "gulp.talk"
+     }
+    }
+   ]
+  }
+ ]
+}
