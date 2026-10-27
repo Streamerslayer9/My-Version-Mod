@@ -30,6 +30,9 @@ public class GulpConfig {
     public static BellyStyle bellyStyle = BellyStyle.STOMACH;
     public static boolean levelUpMessages = true;
 
+    /** Show each player's role in their name tag, e.g. "Name [Prey]". */
+    public static boolean showRoleTags = true;
+
     /** The short action-bar messages when you do something (swallow, release, "too big", ...). */
     public static boolean actionMessages = true;
 
@@ -73,6 +76,7 @@ public class GulpConfig {
             bellyStyle = BellyStyle.valueOf(props.getProperty("bellyStyle", BellyStyle.STOMACH.name()));
             levelUpMessages = Boolean.parseBoolean(props.getProperty("levelUpMessages", "true"));
             actionMessages = Boolean.parseBoolean(props.getProperty("actionMessages", "true"));
+            showRoleTags = Boolean.parseBoolean(props.getProperty("showRoleTags", "true"));
             cpmSliders = Boolean.parseBoolean(props.getProperty("cpmSliders", "true"));
             cpmBellyName = props.getProperty("cpmBellyName", "belly").trim();
             cpmMobsName = props.getProperty("cpmMobsName", "belly_mobs").trim();
@@ -94,6 +98,7 @@ public class GulpConfig {
             props.setProperty("bellyStyle", bellyStyle.name());
             props.setProperty("levelUpMessages", Boolean.toString(levelUpMessages));
             props.setProperty("actionMessages", Boolean.toString(actionMessages));
+            props.setProperty("showRoleTags", Boolean.toString(showRoleTags));
             props.setProperty("cpmSliders", Boolean.toString(cpmSliders));
             props.setProperty("cpmBellyName", cpmBellyName);
             props.setProperty("cpmMobsName", cpmMobsName);

@@ -9,9 +9,9 @@ import net.minecraft.network.chat.Component;
 /** Client-side settings. Saved to config/gulp-client.properties. */
 public class SettingsScreen extends Screen {
     private static final int W = 250;
-    private static final int H = 248;
+    private static final int H = 272;
 
-    private Button bellyButton, levelUpButton, actionButton, roleButton, perkMenuButton, cpmButton, instantButton;
+    private Button bellyButton, levelUpButton, actionButton, roleButton, perkMenuButton, cpmButton, instantButton, roleTagButton;
     private Role shownRole;
 
     public SettingsScreen() {
@@ -27,6 +27,7 @@ public class SettingsScreen extends Screen {
         actionButton.setMessage(Component.literal("Action messages: " + (GulpConfig.actionMessages ? "ON" : "OFF")));
         cpmButton.setMessage(Component.literal("CPM belly sliders: " + (GulpConfig.cpmSliders ? "ON" : "OFF")
                 + (CpmBridge.available() ? "" : " (CPM not found)")));
+        roleTagButton.setMessage(Component.literal("Role in name tags: " + (GulpConfig.showRoleTags ? "ON" : "OFF")));
         instantButton.setMessage(Component.literal("Instant digest button: " + (ClientState.isInstantDigest() ? "ON" : "OFF")));
         perkMenuButton.setMessage(Component.literal("Perk menu: " + (GulpConfig.legacyPerkMenu ? "Legacy" : "New look")));
         Role role = ClientState.role();
@@ -85,6 +86,14 @@ public class SettingsScreen extends Screen {
         instantButton.setTooltip(Tooltip.create(Component.literal(
                 "Shows a Digest button next to each mob in your stomach that digests it right away. Off by default.")));
         addRenderableWidget(instantButton);
+        // A coloured [Pred] / [Prey] / [Both] / [Neither] after every player's name above their head. Only on your screen.
+        roleTagButton = Button.builder(Component.empty(), btn -> {
+            GulpConfig.showRoleTags = !GulpConfig.showRoleTags;
+            GulpConfig.save();
+            ClientRoleTags.refreshAll();
+            refresh();
+        }).bounds(x + 15, y + 214, W - 30, 20).build();
+        addRenderableWidget(roleTagButton);
         addRenderableWidget(bellyButton);
         addRenderableWidget(cpmButton);
         addRenderableWidget(actionButton);

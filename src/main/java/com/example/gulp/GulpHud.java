@@ -13,17 +13,6 @@ public final class GulpHud {
         g.drawString(mc.font, text, rightEdge - mc.font.width(text), y, color);
     }
 
-    /** Pointing at another player shows their role badge under the crosshair. */
-    private static void renderRoleBadge(GuiGraphics g, Minecraft mc, int screenWidth, int screenHeight) {
-        if (!(mc.crosshairPickEntity instanceof Player other) || other == mc.player) return;
-        Role role = ClientState.roleOf(other.getUUID());
-        if (role == null) return;
-        int cx = screenWidth / 2;
-        int cy = screenHeight / 2 + 14;
-        g.drawCenteredString(mc.font, "[" + role.label + "] " + other.getName().getString(), cx, cy, role.color);
-        g.drawCenteredString(mc.font, role.hint, cx, cy + 10, 0xFFAAAAAA);
-    }
-
     /** What a swallowed player sees: who holds them, and what the Struggle key does right now. */
     private static void renderHeldOverlay(GuiGraphics g, Minecraft mc, int screenWidth) {
         int mode = ClientState.heldMode();
@@ -54,7 +43,6 @@ public final class GulpHud {
         Minecraft mc = Minecraft.getInstance();
         if (mc.options.hideGui || mc.player == null) return;
 
-        renderRoleBadge(g, mc, screenWidth, screenHeight);
         renderHeldOverlay(g, mc, screenWidth);
         if (!ClientState.role().canEat()) return; // Prey / Neither: no stomach, so no stomach HUD
 

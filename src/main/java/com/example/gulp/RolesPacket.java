@@ -3,6 +3,8 @@ package com.example.gulp;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -46,7 +48,10 @@ public class RolesPacket {
 
     public static void handle(RolesPacket m, Supplier<NetworkEvent.Context> ctx) {
         NetworkEvent.Context c = ctx.get();
-        c.enqueueWork(() -> ClientState.setRoles(m.roles));
+        c.enqueueWork(() -> {
+            ClientState.setRoles(m.roles);
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientRoleTags.refreshAll()); // name tags pick up the new roles
+        });
         c.setPacketHandled(true);
     }
 }
