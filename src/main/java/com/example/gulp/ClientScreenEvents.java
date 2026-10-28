@@ -3,6 +3,8 @@ package com.example.gulp;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.Minecraft;
+import org.lwjgl.glfw.GLFW;
+import net.minecraftforge.event.TickEvent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -94,9 +96,9 @@ public final class ClientScreenEvents {
         int right = screen.getGuiLeft() + screen.getXSize() - 7;
         // The buttons ALWAYS say "Eat", whatever the item is (food, blocks, gear, junk).
         Button digest64 = new SmallTextButton(right - bw, by, bw, bh, Component.literal("Eat 64"), btn -> Net.send(10, 64));
-        digest64.setTooltip(Tooltip.create(Component.literal("Eat up to 64 of the item in the first slot")));
+        digest64.setTooltip(Tooltip.create(Component.literal("Eat up to 64 of the item in the first slot. Or just right-click any item in the storage to eat it (hold to keep eating, shift for the whole stack).")));
         Button digest1 = new SmallTextButton(right - bw * 2 - 2, by, bw, bh, Component.literal("Eat 1"), btn -> Net.send(10, 1));
-        digest1.setTooltip(Tooltip.create(Component.literal("Eat 1 of the item in the first slot")));
+        digest1.setTooltip(Tooltip.create(Component.literal("Eat 1 of the item in the first slot. Or just right-click any item in the storage to eat it.")));
         e.addListener(digest1);
         e.addListener(digest64);
     }
@@ -170,6 +172,56 @@ public final class ClientScreenEvents {
         if (box < 0 || (e.getButton() != 0 && e.getButton() != 1)) return;
         Net.send(15, box | (e.getButton() << 4) | (Screen.hasShiftDown() ? 1 << 5 : 0));
         e.setCanceled(true);
+    }
+
+    private static boolean isStorage(ContainerScreen screen) {
+        return Gulp.STORAGE_TITLE.equals(screen.getTitle().getString());
+    }
+
+    // ---- right-click an item in the stomach storage to eat it; hold to keep eating
+    private static int rightHoldSlot = -1;
+    private static int rightHoldTicks;
+
+    @SubscribeEvent
+    public static void onSlotRightClick(ScreenEvent.MouseButtonPressed.Pre e) {
+        if (!GulpConfig.rightClickEat || e.getButton() != 1) return;
+        if (!(e.getScreen() instanceof ContainerScreen screen) || !isStorage(screen)) return;
+        if (!screen.getMenu().getCarried().isEmpty()) return;            // holding an item: right-click works as usual
+        if (boxAt(screen, e.getMouseX(), e.getMouseY()) >= 0) return;    // the Enchant Stripper boxes have their own clicks
+        Slot slot = screen.getSlotUnderMouse();
+        if (slot == null || slot.index >= screen.getMenu().getRowCount() * 9 || !slot.hasItem()) return; // storage slots only
+        Net.send(18, slot.index | (Screen.hasShiftDown() ? 1 << 16 : 0));
+        rightHoldSlot = slot.index;
+        rightHoldTicks = 0;
+        e.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onSlotRightRelease(ScreenEvent.MouseButtonReleased.Pre e) {
+        if (e.getButton() == 1 && rightHoldSlot >= 0) {
+            rightHoldSlot = -1;
+            e.setCanceled(true);
+        }
+    }
+
+    /** While right-click is held on a storage slot: after a short pause, eat one more every 2 ticks until it's gone or released. */
+    @SubscribeEvent
+    public static void onHoldTick(TickEvent.ClientTickEvent e) {
+        if (e.phase != TickEvent.Phase.END || rightHoldSlot < 0) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (!(mc.screen instanceof ContainerScreen screen) || !isStorage(screen)
+                || GLFW.glfwGetMouseButton(mc.getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) != GLFW.GLFW_PRESS) {
+            rightHoldSlot = -1;
+            return;
+        }
+        if (!screen.getMenu().getSlot(rightHoldSlot).hasItem()) { // eaten up
+            rightHoldSlot = -1;
+            return;
+        }
+        rightHoldTicks++;
+        if (rightHoldTicks >= 8 && (rightHoldTicks - 8) % 2 == 0) {
+            Net.send(18, rightHoldSlot | (Screen.hasShiftDown() ? 1 << 16 : 0));
+        }
     }
 
     @SubscribeEvent

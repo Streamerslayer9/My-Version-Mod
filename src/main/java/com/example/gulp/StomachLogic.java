@@ -85,6 +85,7 @@ public final class StomachLogic {
     // 0 swallow | 1 toggle mode | 2 release last | 3 release all
     // 4 release entry (arg = uid) | 5 digest entry now (arg = uid) | 6 buy perk (arg = perk index)
     // 7 open item storage | 8 set your role (arg = Role ordinal)
+    // 18 right-click on a storage slot: eat it (arg = slot | shift << 16)
     // 17 settings: instant Digest button on / off (arg 1 / 0)
     // 16 destroy the enchantments on the source box (nothing is made)
     // 15 click on an Enchant Stripper box (arg = box | button << 4 | shift << 5)
@@ -107,7 +108,7 @@ public final class StomachLogic {
         Stomach s = mgr.of(p.getUUID());
         // Roles: Prey and Neither have no swallowing, mode switch, digesting or item storage at all.
         // (Release, perks and changing your role always work.)
-        if (!s.role.canEat() && (action == 0 || action == 1 || action == 5 || action == 7 || action == 9 || action == 10 || action == 12 || action == 13 || action == 15 || action == 16)) {
+        if (!s.role.canEat() && (action == 0 || action == 1 || action == 5 || action == 7 || action == 9 || action == 10 || action == 12 || action == 13 || action == 15 || action == 16 || action == 18)) {
             StomachLogic.say(p, s.role.cantSwallowMessage());
             return;
         }
@@ -167,6 +168,14 @@ public final class StomachLogic {
             }
             case 7 -> openStorage(p, mgr, s);
             case 9 -> swallowFromInventorySlot(p, s, arg);
+            case 18 -> {
+                // Right-click on a storage slot: eat that item (arg = slot | shift << 16 for the whole stack, up to 64).
+                if (GulpServerConfig.ITEM_STORAGE_ENABLED.get() && p.containerMenu instanceof ChestMenu cm
+                        && cm.getContainer() == OPEN_VIEWS.get(p.getUUID())
+                        && cm.getContainer() instanceof SimpleContainer view) {
+                    StomachItems.digestSlot(p, s, view, arg & 0xFFFF, ((arg >> 16) & 1) != 0 ? 64 : 1);
+                }
+            }
             case 17 -> {
                 // Settings: turn the instant Digest button on (arg 1) or off (arg 0).
                 s.instantDigest = arg != 0;

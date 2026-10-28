@@ -105,9 +105,15 @@ public final class StomachItems {
      * stomach XP (food adds its nutrition on top). Works in either mode. Goes through the open screen's own container so the screen stays in step.
      */
     public static void digestFirstSlot(ServerPlayer p, Stomach s, SimpleContainer view, int count) {
-        ItemStack stack = view.getItem(0);
+        digestSlot(p, s, view, 0, count);
+    }
+
+    /** Eats up to `count` of the item in ANY storage slot (right-click on the storage screen, or the buttons for slot 0). */
+    public static void digestSlot(ServerPlayer p, Stomach s, SimpleContainer view, int slot, int count) {
+        if (slot < 0 || slot >= view.getContainerSize()) return;
+        ItemStack stack = view.getItem(slot);
         if (stack.isEmpty()) {
-            StomachLogic.say(p, Component.literal("The first slot is empty."));
+            StomachLogic.say(p, Component.literal("That slot is empty."));
             return;
         }
         if (!GulpServerConfig.UNIVERSAL_DIGESTION_ENABLED.get()) {
@@ -130,7 +136,7 @@ public final class StomachItems {
         if (stack.isDamageableItem()) {
             List<ItemStack> parts = partsOf(p.getServer(), stack.getItem());
             if (parts != null) {
-                breakDownFirstSlot(p, s, view, count, parts);
+                breakDownSlot(p, s, view, slot, count, parts);
                 return;
             }
         }
@@ -140,7 +146,7 @@ public final class StomachItems {
         FoodProperties food = stack.getFoodProperties(p);
         int nutrition = food == null ? 0 : food.getNutrition();
 
-        view.removeItem(0, n); // the screen's listener saves the change and syncs the client
+        view.removeItem(slot, n); // the screen's listener saves the change and syncs the client
 
         // Iron Gut: every 32 items eaten (of any kind) restores hunger. The counter lives in the Stomach, so it survives
         // closing the screen, relogging and dying. Several payouts can happen at once (e.g. "Eat 64" = two).
@@ -164,14 +170,14 @@ public final class StomachItems {
         p.containerMenu.broadcastChanges();
     }
 
-    /** Eat button on breakable gear: breaks up to `count` of the first slot's item into its parts (worn gear gives back less). */
-    private static void breakDownFirstSlot(ServerPlayer p, Stomach s, SimpleContainer view, int count, List<ItemStack> parts) {
-        ItemStack stack = view.getItem(0);
+    /** Eating breakable gear: breaks up to `count` of the slot's item into its parts (worn gear gives back less). */
+    private static void breakDownSlot(ServerPlayer p, Stomach s, SimpleContainer view, int slot, int count, List<ItemStack> parts) {
+        ItemStack stack = view.getItem(slot);
         int n = Math.max(1, Math.min(Math.min(count, 64), stack.getCount()));
         Component name = stack.getHoverName();
         double condition = 1.0 - stack.getDamageValue() / (double) Math.max(1, stack.getMaxDamage());
 
-        view.removeItem(0, n); // free the slot BEFORE adding the parts
+        view.removeItem(slot, n); // free the slot BEFORE adding the parts
         for (int i = 0; i < n; i++) {
             for (ItemStack part : parts) {
                 // Same as the hard-mode breakdown: 100% of the parts when new, about half when nearly broken.

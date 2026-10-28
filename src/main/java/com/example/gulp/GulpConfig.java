@@ -33,6 +33,9 @@ public class GulpConfig {
     /** Show each player's role in their name tag, e.g. "Name [Prey]". */
     public static boolean showRoleTags = true;
 
+    /** Right-click an item in the stomach storage to eat it (hold to keep eating). Off = normal right-click. */
+    public static boolean rightClickEat = true;
+
     /** The short action-bar messages when you do something (swallow, release, "too big", ...). */
     public static boolean actionMessages = true;
 
@@ -77,6 +80,7 @@ public class GulpConfig {
             levelUpMessages = Boolean.parseBoolean(props.getProperty("levelUpMessages", "true"));
             actionMessages = Boolean.parseBoolean(props.getProperty("actionMessages", "true"));
             showRoleTags = Boolean.parseBoolean(props.getProperty("showRoleTags", "true"));
+            rightClickEat = Boolean.parseBoolean(props.getProperty("rightClickEat", "true"));
             cpmSliders = Boolean.parseBoolean(props.getProperty("cpmSliders", "true"));
             cpmBellyName = props.getProperty("cpmBellyName", "belly").trim();
             cpmMobsName = props.getProperty("cpmMobsName", "belly_mobs").trim();
@@ -99,6 +103,7 @@ public class GulpConfig {
             props.setProperty("levelUpMessages", Boolean.toString(levelUpMessages));
             props.setProperty("actionMessages", Boolean.toString(actionMessages));
             props.setProperty("showRoleTags", Boolean.toString(showRoleTags));
+            props.setProperty("rightClickEat", Boolean.toString(rightClickEat));
             props.setProperty("cpmSliders", Boolean.toString(cpmSliders));
             props.setProperty("cpmBellyName", cpmBellyName);
             props.setProperty("cpmMobsName", cpmMobsName);
