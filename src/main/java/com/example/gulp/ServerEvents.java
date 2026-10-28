@@ -132,6 +132,9 @@ public final class ServerEvents {
         var server = ServerLifecycleHooks.getCurrentServer();
         if (server != null && server.getTickCount() % 10 == 0) McaIntegration.tickScared(server);
         if (server != null && server.getTickCount() % 100 == 0) McaIntegration.tickAffection(server);
+        // Re-send the role list every 5 seconds (tiny packet): a player who joined, or whose client built a name tag before the
+        // list arrived, always catches up. This is what makes the badges reliable in multiplayer.
+        if (server != null && server.getTickCount() % 100 == 50) RolesPacket.broadcast(server);
     }
 
     @SubscribeEvent
