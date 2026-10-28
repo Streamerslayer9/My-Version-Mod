@@ -105,7 +105,22 @@ public final class StomachItems {
      * stomach XP (food adds its nutrition on top). Works in either mode. Goes through the open screen's own container so the screen stays in step.
      */
     public static void digestFirstSlot(ServerPlayer p, Stomach s, SimpleContainer view, int count) {
+        // The Eat buttons always act on the first slot, so keep an item there: close any gap before eating, and once the
+        // slot has been eaten empty, everything moves forward so the next item is ready (spam Eat 64 to eat it all).
+        if (view.getItem(0).isEmpty()) shiftForward(view);
         digestSlot(p, s, view, 0, count);
+        if (view.getItem(0).isEmpty()) shiftForward(view);
+    }
+
+    /** Moves every item forward by the number of empty slots at the front, so slot 0 holds an item again (order is kept). */
+    private static void shiftForward(SimpleContainer view) {
+        int size = view.getContainerSize();
+        int gap = 0;
+        while (gap < size && view.getItem(gap).isEmpty()) gap++;
+        if (gap == 0 || gap >= size) return; // already filled, or nothing left to move
+        for (int i = 0; i + gap < size; i++) view.setItem(i, view.getItem(i + gap));
+        for (int i = size - gap; i < size; i++) view.setItem(i, ItemStack.EMPTY);
+        view.setChanged();
     }
 
     /** Eats up to `count` of the item in ANY storage slot (right-click on the storage screen, or the buttons for slot 0). */
